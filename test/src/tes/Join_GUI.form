@@ -61,7 +61,7 @@
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Group type="102" attributes="0">
                               <Component id="joinpw" min="-2" pref="180" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="88" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
                               <EmptySpace min="0" pref="89" max="32767" attributes="0"/>
@@ -148,18 +148,12 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="joinname">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="&#xc774;&#xb984;&#xc744; &#xc785;&#xb825;&#xd558;&#xc138;&#xc694;"/>
-          </Properties>
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="joinnameMouseClicked"/>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="joinnameActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="joinid">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="&#xc544;&#xc774;&#xb514;&#xb97c; &#xc785;&#xb825;&#xd558;&#xc138;&#xc694;"/>
-          </Properties>
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="joinidMouseClicked"/>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="joinidActionPerformed"/>

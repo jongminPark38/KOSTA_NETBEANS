@@ -18,11 +18,17 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 public class Join_GUI extends javax.swing.JFrame {
-   
-    boolean check = false;
-    String id;
 
+    private Socket socket;
+    boolean check = false;  // Áßº¹Ã¼Å©¿¡ ´ëÇÑ false °ª
+    String id;
     public Join_GUI() {
+        try {
+            socket = new Socket("localhost", 9999);
+        } catch (IOException ex) {
+            Logger.getLogger(Join_GUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         initComponents();
 
     }
@@ -56,7 +62,6 @@ public class Join_GUI extends javax.swing.JFrame {
 
         jLabel5.setText("CellPhone");
 
-        joinname.setText("ÀÌ¸§À» ÀÔ·ÂÇÏ¼¼¿ä");
         joinname.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 joinnameMouseClicked(evt);
@@ -68,7 +73,6 @@ public class Join_GUI extends javax.swing.JFrame {
             }
         });
 
-        joinid.setText("¾ÆÀÌµð¸¦ ÀÔ·ÂÇÏ¼¼¿ä");
         joinid.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 joinidMouseClicked(evt);
@@ -130,7 +134,7 @@ public class Join_GUI extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addComponent(joinpw, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(0, 0, Short.MAX_VALUE))
+                            .addGap(0, 88, Short.MAX_VALUE))
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addGap(0, 89, Short.MAX_VALUE)
                             .addComponent(joinBackBtn)
@@ -207,10 +211,11 @@ public class Join_GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_joinBackBtnActionPerformed
 
     private void joinCheckBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_joinCheckBtnActionPerformed
-if (joinid.getText().equals("")) { // idv°¡ ºóÄ­ÀÎ »óÅÂ¿¡¼­ Áßº¹Ã¼Å©¹öÆ°À» ´­·¶À» ¶§
+if (joinid.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "¾ÆÀÌµðÀÔ·Â");
 }else{
-        id = joinid.getText(); // joinid ¿¡ ÀÔ·ÂµÈ °ªÀ» id¿¡ ÀúÀå
+        id = joinid.getText();
+        //
         sendMsg("id_check/" + id + "/");
 }
     }//GEN-LAST:event_joinCheckBtnActionPerformed
@@ -225,45 +230,47 @@ if (joinid.getText().equals("")) { // idv°¡ ºóÄ­ÀÎ »óÅÂ¿¡¼­ Áßº¹Ã¼Å©¹öÆ°À» ´­·¶À
         String cellphonev2 = joincell2.getText(); // ÀÔ·ÂÇÑ °ªÀ» cell2¿¡ ´ëÀÔ
         String cellphonev3 = joincell3.getText(); // ÀÔ·ÂÇÑ °ªÀ» cell3¿¡ ´ëÀÔ
 
-        if (namev.equals("")) { //namev°¡ ºóÄ­ÀÏ °æ¿ì
+        if (namev.equals("")) { //namev°¡ ºóÄ­ÀÏ¶§
             JOptionPane.showMessageDialog(this, "ÀÌ¸§À» ÀÔ·ÂÇÏ¼¼¿ä"); // ¿¡·¯¸Þ½ÃÁö
-        } else if (idv.equals("")) { // idv°¡ ºóÄ­ÀÏ °æ¿ì
+        } else if (idv.equals("")) { // idv°¡ ºóÄ­ÀÏ¶§
             JOptionPane.showMessageDialog(this, "¾Æ¾Æµð¸¦ ÀÔ·ÂÇÏ¼¼¿ä");
-        } else if (passwordv.equals("")) { // passwordv°¡ ºóÄ­ÀÏ °æ¿ì
+        } else if (passwordv.equals("")) { // passwordv°¡ ºóÄ­ÀÏ¶§
             JOptionPane.showMessageDialog(this, "ºñ¹Ð¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä");
+            // cell1,2,3ÀÌ ºóÄ­ÀÏ¶§
         } else if (cellphonev1.equals("") || cellphonev2.equals("") || cellphonev3.equals("")) {
-            // cell1,2,3ÀÌ ºóÄ­ÀÏ °æ¿ì
             JOptionPane.showMessageDialog(this, "ÇÚµåÆù ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä");
+            // cell1,2,3ÀÌ ¼ýÀÚ°¡ ¾Æ´Ò½Ã, °¢°¢ 3,4,4 ±ÛÀÚ°¡ ¾Æ´Ò ¶§
         } else if (!(cellphonev1.matches("[0-9]{3}") && cellphonev2.matches("[0-9]{4}") && cellphonev3.matches("[0-9]{4}"))) {
-            // cell1,2,3ÀÌ ¼ýÀÚ°¡ ¾Æ´Ï°í, °¢°¢ 3,4,4 ±ÛÀÚ°¡ ¾Æ´Ò °æ¿ì
             JOptionPane.showMessageDialog(this, "ÇÚµåÆù ¹øÈ£¸¦ ´Ù½Ã ÀÔ·ÂÇÏ¼¼¿ä");
-        } else if (check == false) { // Áßº¹Ã¼Å©¸¦ ¾ÈÇßÀ» °æ¿ì
+        } else if (check == false) { // Áßº¹Ã¼Å©¸¦ ¾ÈÇßÀ» ¶§
             JOptionPane.showMessageDialog(this, "Áßº¹ Ã¼Å© ÇÏ¼¼¿ä");
-        }else if(!(idv.equals(id))) { // ÀÔ·ÂµÈ idv¿Í ÇöÀçjoinid°¡ °°Áö ¾ÊÀ» °æ¿ì 
-            JOptionPane.showMessageDialog(this, "Áßº¹Ã¼Å©¸¦ ´Ù½Ã ÇÏ¼¼¿ä");
+        } else if (!(id.equals(idv))) {
+            JOptionPane.showMessageDialog(this, "Áßº¹ Ã¼Å©¸¦ ´Ù½ÃÇÏ¼¼¿ä");
         }else {
+            sendMsg(idv);
             JOptionPane.showMessageDialog(this, "È¸¿ø°¡ÀÔ¿¡ ¼º°ø µÇ¾ú½À´Ï´Ù.");
-         
+          
             
             
-            JSONParser parser = new JSONParser();       // ºÒ·¯¿À±â
-            JSONObject memberInfo = new JSONObject();   // °ª¿¡ ´ëÇÑ °´Ã¼ »ý¼º
+            JSONParser parser = new JSONParser(); // ºÒ·¯¿À±â
+            JSONObject memberInfo = new JSONObject(); // °ª¿¡ ´ëÇÑ °´Ã¼ »ý¼º
 
             try {
                 JSONObject members = (JSONObject) parser.parse(new FileReader(
-                        "C:\\bigdataStudy\\java\\netwokrspace\\KOSTA_NETBEANS\\Semi_Project\\src\\GUI\\JsonGrace.json"));
-                // Å°¿¡ ´ëÇÑ °´Ã¼ »ý¼º --> ºÒ·¯¿À±â
+                        "C:\\bigdataStudy\\java\\netwokrspace\\Semi_Project\\src\\GUI\\JsonGrace.json"));
+                //Å°¿¡ ´ëÇÑ °´Ã¼ »ý¼º --> ºÒ·¯¿À±â
 
-                memberInfo.put("Name", namev);        //ÀÔ·ÂÇÑ °ªÀ» JSon¿¡ ÀúÀå
-                memberInfo.put("ID", idv);            //ÀÔ·ÂÇÑ °ªÀ» JSon¿¡ ÀúÀå
-                memberInfo.put("password", passwordv);//ÀÔ·ÂÇÑ °ªÀ» JSon¿¡ ÀúÀå
-                memberInfo.put("Cell1", cellphonev1); //ÀÔ·ÂÇÑ °ªÀ» JSon¿¡ ÀúÀå
-                memberInfo.put("Cell2", cellphonev2); //ÀÔ·ÂÇÑ °ªÀ» JSon¿¡ ÀúÀå
-                memberInfo.put("Cell3", cellphonev3); //ÀÔ·ÂÇÑ °ªÀ» JSon¿¡ ÀúÀå
-                       
-               members.put( namev, memberInfo);
-                                                
-                FileWriter fw = new FileWriter("C:\\bigdataStudy\\java\\netwokrspace\\KOSTA_NETBEANS\\Semi_Project\\src\\GUI\\JsonGrace.json");
+                memberInfo.put("Name", namev);  //ÀÔ·ÂÇÑ °ªÀ» JSon¿¡ ÀúÀå
+                memberInfo.put("ID", idv);
+                memberInfo.put("password", passwordv);
+                memberInfo.put("Cell1", cellphonev1);
+                memberInfo.put("Cell2", cellphonev2);
+                memberInfo.put("Cell3", cellphonev3);
+
+                members.put(idv, memberInfo); 
+
+                FileWriter fw = new FileWriter(
+                        "C:\\bigdataStudy\\java\\netwokrspace\\Semi_Project\\src\\GUI\\JsonGrace.json");
                 fw.write(members.toJSONString());
                 fw.flush();
                 fw.close();
@@ -314,12 +321,11 @@ if (joinid.getText().equals("")) { // idv°¡ ºóÄ­ÀÎ »óÅÂ¿¡¼­ Áßº¹Ã¼Å©¹öÆ°À» ´­·¶À
     }//GEN-LAST:event_joinidMouseClicked
 
     public void sendMsg(String msg) {
-        Socket socket = null; //  socket»ý¼º
+        socket = null; //  socket»ý¼º
         PrintWriter pw = null; // server·Î º¸³»±â À§ÇÑ Ãâ·Â ½ºÆ®¸²
         BufferedReader br = null; // server·ÎºÎÅÍ µ¥ÀÌÅÍ¸¦ ÀÐ¾îµéÀÌ±â À§ÇÑ ÀÔ·Â½ºÆ®¸²
         try {
-            socket = new Socket("localhost", 9999); 
-            //server·Î Á¢¼Ó
+             //server·Î Á¢¼Ó
             pw = new PrintWriter(socket.getOutputStream(), true);
             br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             System.out.println(msg);
@@ -327,9 +333,11 @@ if (joinid.getText().equals("")) { // idv°¡ ºóÄ­ÀÎ »óÅÂ¿¡¼­ Áßº¹Ã¼Å©¹öÆ°À» ´­·¶À
 
             String answer = br.readLine();
 
+            //
             StringTokenizer stz = new StringTokenizer(answer, "/");
             String token = stz.nextToken();
 
+            //
             if (token.equals("id_check")) {
                 if (stz.nextToken().equals("true")) {
                     JOptionPane.showMessageDialog(this, "»ç¿ë°¡´ÉÇÑ ¾ÆÀÌµðÀÔ´Ï´Ù.");
@@ -340,6 +348,8 @@ if (joinid.getText().equals("")) { // idv°¡ ºóÄ­ÀÎ »óÅÂ¿¡¼­ Áßº¹Ã¼Å©¹öÆ°À» ´­·¶À
                 check = false;
                 } 
             }
+        } catch (IOException ex) {
+        } finally {
             try {
                 if (!socket.isClosed()) {
                     br.close();
@@ -348,18 +358,7 @@ if (joinid.getText().equals("")) { // idv°¡ ºóÄ­ÀÎ »óÅÂ¿¡¼­ Áßº¹Ã¼Å©¹öÆ°À» ´­·¶À
                 }
             } catch (IOException ex) {
             }
-        } catch (IOException ex) {
         }
-//        finally {
-//            try {
-//                if (!socket.isClosed()) {
-//                    br.close();
-//                    pw.close();
-//                    socket.close();
-//                }
-//            } catch (IOException ex) {
-//            }
-//        }
     }
 
     public static void main(String args[]) {

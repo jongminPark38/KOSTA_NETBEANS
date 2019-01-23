@@ -22,7 +22,7 @@ public class ServerThreadGrace implements Runnable {
     private BufferedReader br;
     private PrintWriter pw;
     private JSONParser parser;
-    private final String member = "C:\\bigdataStudy\\java\\netwokrspace\\KOSTA_NETBEANS\\Semi_Project\\src\\GUI\\JsonGrace.json";
+    private final String member = "C:\\bigdataStudy\\java\\netwokrspace\\Semi_Project\\src\\GUI\\JsonGrace.json";
 
  
     
@@ -63,7 +63,7 @@ public class ServerThreadGrace implements Runnable {
                 if (token.equals("id_check")) {
                     // "id_check/아이디/null/null"
                     
-                    JSONObject obj = (JSONObject) parser.parse(new FileReader("C:\\bigdataStudy\\java\\netwokrspace\\KOSTA_NETBEANS\\Semi_Project\\src\\GUI\\JsonGrace.json"));
+                    JSONObject obj = (JSONObject) parser.parse(new FileReader("C:\\bigdataStudy\\java\\netwokrspace\\Semi_Project\\src\\GUI\\JsonGrace.json"));
                     Set ids = obj.keySet();
                     if (!ids.contains(stz.nextToken())) {
                         System.out.println("true");
@@ -77,6 +77,8 @@ public class ServerThreadGrace implements Runnable {
                     // "join/아이디/비밀번호/연락처"
                     String id = stz.nextToken();
                     // 회원가입하는 로직
+                    
+                    
                 }
             }
         } catch (IOException ex) {
