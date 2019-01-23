@@ -277,7 +277,7 @@ if (joinid.getText().equals("")) { // idv가 빈칸인 상태에서 중복체크버튼을 눌렀�
             
             
                     
-            check = false;
+            check = false;      //중복체크 값을 false로
             joinname.setText("");
             joinid.setText("");
             joinpw.setText("");
